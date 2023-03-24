@@ -55,4 +55,33 @@ class ListingController extends Controller
         return redirect('/')->with('message', 'Job listing created successfully!');
     }
 
+    // show edit form
+    public function edit(Listing $listing){
+        return view('listings.edit', ['listing' => $listing]);
+    }
+
+    // update listing data
+    public function update(Request $request, Listing $listing){
+        $formFields = $request->validate([
+            'title' => 'required',
+            'tags' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'email' => ['required', 'email'],
+            'website' => 'required',
+            'description' => 'required'
+        ]);
+
+        // image upload
+        if($request->hasFile('logo')){
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        // storing form data into listings database
+        $listing->update($formFields);
+
+        // return back and creating flash message
+        return back()->with('message', 'Job listing updated successfully!');
+    }
+
 }
