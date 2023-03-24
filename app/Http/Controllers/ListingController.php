@@ -14,7 +14,7 @@ class ListingController extends Controller
     {
         return view('listings.index', [
             //using scopefilter
-            'listings' => Listing::latest()->filter(request(['tag', 'search']))->get()
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate(6)
         ]);
     }
 
