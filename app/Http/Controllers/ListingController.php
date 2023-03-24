@@ -27,7 +27,9 @@ class ListingController extends Controller
     }
 
     // Show create Form
-    
+    public function create(){
+        return view('listings.create');
+    }
 
     //store listing data
     
