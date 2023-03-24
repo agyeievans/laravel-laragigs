@@ -46,7 +46,8 @@ class ListingController extends Controller
         // storing form data into listings database
         Listing::create($formFields);
 
-        return redirect('/');
+        // redirect and creating flash message
+        return redirect('/')->with('message', 'Job listing created successfully!');
     }
 
 }
