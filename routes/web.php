@@ -19,8 +19,8 @@ use App\Models\Listing;
 // All listings
 Route::get('/', [ListingController::class, 'index']);
 
-// Show create Form
-Route::get('/listings/create', [ListingController::class, 'create']);
+// Show create Form and added authenticated user should only see the create listing
+Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
 
 //Store listing data
 Route::post('/listings', [ListingController::class, 'store']);
@@ -46,8 +46,8 @@ Route::post('/users', [UserController::class, 'store']);
 // user logout
 Route::post('/logout', [UserController::class, 'logout']);
 
-// show login form
-Route::get('/login', [UserController::class, 'login']);
+// show login form and added name to the route
+Route::get('/login', [UserController::class, 'login'])->name('login');
 
 // login user
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
