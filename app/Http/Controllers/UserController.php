@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -32,4 +33,16 @@ class UserController extends Controller
 
         return redirect('/')->with('message', 'Your account has been created and logged in.');
     }
+
+    // logout user
+    public function logout(Request $request){
+        auth()->logout();
+
+        // invalidate user session and regenerate csrf token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'Your account has been logged out.');
+    }
+
 }
