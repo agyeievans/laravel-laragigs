@@ -27,12 +27,14 @@ class ListingController extends Controller
     }
 
     // Show create Form
-    public function create(){
+    public function create()
+    {
         return view('listings.create');
     }
 
     //store listing data
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $formFields = $request->validate([
             'title' => 'required',
             'tags' => 'required',
@@ -44,9 +46,12 @@ class ListingController extends Controller
         ]);
 
         // image upload
-        if($request->hasFile('logo')){
+        if ($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
+
+        // add user_id to job listing
+        $formFields['user_id'] = auth()->id();
 
         // storing form data into listings database
         Listing::create($formFields);
@@ -56,12 +61,14 @@ class ListingController extends Controller
     }
 
     // show edit form
-    public function edit(Listing $listing){
+    public function edit(Listing $listing)
+    {
         return view('listings.edit', ['listing' => $listing]);
     }
 
     // update listing data
-    public function update(Request $request, Listing $listing){
+    public function update(Request $request, Listing $listing)
+    {
         $formFields = $request->validate([
             'title' => 'required',
             'tags' => 'required',
@@ -73,7 +80,7 @@ class ListingController extends Controller
         ]);
 
         // image upload
-        if($request->hasFile('logo')){
+        if ($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
@@ -85,10 +92,10 @@ class ListingController extends Controller
     }
 
     // delete listing
-    public function destroy(Listing $listing){
+    public function destroy(Listing $listing)
+    {
         $listing->delete();
 
         return redirect('/')->with('message', 'Job listing deleted successfully!');
     }
-
 }
