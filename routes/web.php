@@ -23,13 +23,13 @@ Route::get('/', [ListingController::class, 'index']);
 Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
 
 //Store listing data
-Route::post('/listings', [ListingController::class, 'store']);
+Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
 
 // Show edit form
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');
 
 //update listing
-Route::put('/listings/{listing}', [ListingController::class, 'update']);
+Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth');
 
 //delete listing
 Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
@@ -44,7 +44,7 @@ Route::get('/register', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
 // user logout
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // show login form and added name to the route
 Route::get('/login', [UserController::class, 'login'])->name('login');
